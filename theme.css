@@ -1,0 +1,419 @@
+/*
+ * Shadowkeep — Bog & Iron theme
+ * Layout rules stay in styles.css; this file owns the visual system.
+ * Palette: peat, wet stone, old bone, weathered brass and dried blood.
+ */
+:root {
+  color-scheme: dark;
+  --bg: #11130f;
+  --bg2: #191c16;
+  --panel: #20231b;
+  --panel2: #282b21;
+  --panel3: #333629;
+  --line: #4a4a3b;
+  --line-soft: #35382e;
+  --text: #e4dece;
+  --muted: #b8b09c;
+  --quiet: #918a77;
+  --gold: #a49370;
+  --gold2: #c3b18b;
+  --gold-dark: #6e5d3e;
+  --green: #829077;
+  --red: #a36b60;
+  --blue: #87978e;
+  --radius: 12px;
+  --shadow: 0 24px 70px #0009;
+}
+
+html,
+body {
+  background-color: var(--bg);
+}
+
+body {
+  background-image:
+    radial-gradient(ellipse at 10% 0%, #54513a24, transparent 42%),
+    radial-gradient(ellipse at 92% 18%, #51402b20, transparent 34%),
+    linear-gradient(135deg, #11130f 0%, #171a14 48%, #12140f 100%);
+  color: var(--text);
+}
+
+/* A low-contrast scuffed grain across the whole table, never over controls. */
+body::before {
+  position: fixed;
+  z-index: 20;
+  inset: 0;
+  content: "";
+  pointer-events: none;
+  opacity: 0.16;
+  background-image:
+    repeating-linear-gradient(113deg, transparent 0 19px, #c5b28a09 20px, transparent 21px 37px),
+    repeating-linear-gradient(7deg, transparent 0 31px, #00000018 32px, transparent 33px 55px),
+    radial-gradient(#d0c29a13 0.55px, transparent 0.8px);
+  background-size: auto, auto, 5px 5px;
+  mix-blend-mode: soft-light;
+}
+
+::selection {
+  color: #f0e8d6;
+  background: #6e6042;
+}
+
+:focus-visible {
+  outline: 2px solid #b4a17a;
+  outline-offset: 3px;
+}
+
+button,
+input,
+select,
+textarea {
+  accent-color: #9d8a65;
+}
+
+input,
+select,
+textarea {
+  border-color: #555343 !important;
+  background-color: #171a14 !important;
+  color: var(--text) !important;
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: #898573 !important;
+  opacity: 1;
+}
+
+.app-shell {
+  background: linear-gradient(90deg, #10120e 0, #171a14 276px, transparent 276px);
+}
+
+.sidebar {
+  background:
+    linear-gradient(180deg, #1a1d16 0%, #151811 72%, #11140f 100%);
+  border-color: #414334;
+  box-shadow: inset -1px 0 #0008;
+}
+
+.brand-mark {
+  border-color: #716a4c;
+  color: #c0b18a;
+  background: linear-gradient(145deg, #464432, #22251b 68%, #181b14);
+  border-radius: 8px;
+}
+
+.campaign-card,
+.dashboard-panel,
+.sheet-panel,
+.settings-panel,
+.content-card,
+.character-card,
+.journal-editor,
+.journal-entry,
+.modal-dialog,
+.modal-card {
+  background: linear-gradient(155deg, #272a20 0%, #1d2019 72%, #191c16 100%);
+  border-color: var(--line);
+  box-shadow: inset 0 1px #b8ad8a0a, 0 10px 28px #0002;
+}
+
+.nav-item {
+  color: #c5beab;
+}
+
+.nav-item:hover {
+  color: #eee7d7;
+  background: #303328;
+}
+
+.nav-item.active {
+  color: #ded2b3;
+  background: linear-gradient(90deg, #3d4030, #292c22);
+  box-shadow: inset 3px 0 #a2916a, inset 0 1px #c2b18a12;
+}
+
+.eyebrow,
+.content-type-heading .eyebrow {
+  color: #b5a47b;
+}
+
+.rules-pill,
+.detail-pill {
+  color: #d0c19a;
+  border-color: #625c43;
+  background: #292c22;
+}
+
+.primary-button,
+.topbar-roll {
+  color: #eee5d2;
+  border-color: #81704f;
+  background: linear-gradient(135deg, #776a4b 0%, #5c533d 58%, #484635 100%);
+  box-shadow: inset 0 1px #eee3c01c, 0 4px 13px #0004;
+}
+
+.primary-button:hover,
+.topbar-roll:hover {
+  filter: brightness(1.12);
+  border-color: #a49370;
+}
+
+.secondary-button,
+.icon-button {
+  color: #d2c9b5;
+  border-color: #555545;
+  background: linear-gradient(145deg, #303328, #22251d);
+}
+
+.secondary-button:hover,
+.icon-button:hover {
+  border-color: #817b5d;
+  background: #373a2c;
+}
+
+.text-button {
+  color: #c0ad82;
+}
+
+.text-button:hover {
+  background: #393a2d;
+}
+
+.danger-text {
+  color: #c17c70;
+}
+
+.welcome-banner {
+  border-color: #5f5940;
+  background:
+    radial-gradient(ellipse at 78% 30%, #77704a24, transparent 44%),
+    linear-gradient(112deg, #3b3b2c 0%, #26291f 48%, #1a1d17 100%);
+  box-shadow: inset 0 0 70px #0005, 0 18px 38px #0003;
+}
+
+.welcome-banner::after {
+  opacity: 0.85;
+  background-image:
+    linear-gradient(90deg, transparent 38%, #0b0e0a55 100%),
+    repeating-linear-gradient(128deg, transparent 0 36px, #d5c49a0b 37px, transparent 39px 62px),
+    repeating-linear-gradient(12deg, transparent 0 53px, #00000018 54px, transparent 55px 81px);
+}
+
+.welcome-banner h2,
+.page-heading h1,
+.panel-heading h2,
+.section-heading h3,
+.content-type-heading h3,
+.builder-intro h2,
+.sheet-identity h2 {
+  color: #e6deca;
+  text-shadow: 0 2px 14px #0009;
+}
+
+.welcome-banner p,
+.page-heading p {
+  color: #c1b9a4;
+}
+
+.banner-sigil {
+  border-color: #8a7c58;
+  color: #c5b58f;
+  box-shadow: 0 0 0 8px #9d906118, 0 0 0 16px #9d90610a;
+}
+
+.quick-start-card,
+.dashboard-party-row,
+.recent-roll,
+.character-stat-strip,
+.spell-choice,
+.selection-detail,
+.rule-entry,
+.feature-entry,
+.equipment-option,
+.homebrew-type-card {
+  border-color: #424536;
+  background: linear-gradient(150deg, #292c22, #1e211a);
+}
+
+.quick-start-card:hover,
+.homebrew-type-card:hover {
+  border-color: #837c5a;
+  background: linear-gradient(145deg, #383a2b, #25281f);
+}
+
+.quick-start-card > span,
+.quick-start-card i,
+.text-button,
+.spell-choice details summary {
+  color: #c1ad82;
+}
+
+.content-type-pill,
+.side-tag {
+  border-color: #635d43;
+  color: #c6b58d;
+  background: #2e3024;
+}
+
+.character-avatar,
+.avatar-small,
+.sidebar-party-avatar {
+  color: #e0d5b9;
+  border-color: #776b4c;
+  background: linear-gradient(145deg, #55513a, #292c21);
+}
+
+.builder-dialog {
+  border-color: #5f5c43;
+  background: #191c16;
+  color: var(--text);
+  box-shadow: 0 28px 100px #000d;
+}
+
+.builder-sidebar {
+  background: linear-gradient(180deg, #25281e, #1a1d16);
+  border-color: #414333;
+}
+
+.builder-step {
+  color: #c1baa7;
+}
+
+.builder-step.active {
+  border-color: #706a4c;
+  background: #343729;
+}
+
+.builder-step.complete .step-number,
+.step-number {
+  border-color: #70694b;
+  background: #292c21;
+  color: #c4b38d;
+}
+
+.builder-content {
+  color: #e0dac9;
+}
+
+.builder-intro p,
+.selection-detail > p,
+.detail-columns span,
+.review-columns span,
+.spell-choice small,
+.equipment-explanation,
+.prepared-spell-panel > p {
+  color: #bcb5a2;
+}
+
+.choice-card {
+  border-color: #4b4c3c;
+  background: linear-gradient(150deg, #2a2d23, #1e211a);
+  box-shadow: inset 0 1px #eee3c008;
+}
+
+.choice-card:hover,
+.choice-card.selected {
+  border-color: #9b8b65;
+  background: linear-gradient(145deg, #393b2b, #25281e);
+}
+
+.choice-card-top strong,
+.spell-choice b,
+.homebrew-type-card b {
+  color: #e5ddc9;
+}
+
+.choice-description,
+.choice-subline {
+  color: #b7b09d;
+}
+
+.selection-detail {
+  border-color: #615b43;
+  box-shadow: inset 0 0 35px #0002;
+}
+
+.builder-footer {
+  border-color: #414333;
+  background: #191c16;
+}
+
+.map-stage {
+  background-image:
+    radial-gradient(ellipse at 52% 35%, #77764b25, transparent 50%),
+    repeating-linear-gradient(152deg, transparent 0 52px, #b0a17a08 53px, transparent 55px 89px),
+    linear-gradient(145deg, #454837 0%, #292e24 48%, #383b2c 100%);
+}
+
+.map-stage::before {
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  content: "";
+  pointer-events: none;
+  opacity: 0.65;
+  background-image:
+    repeating-linear-gradient(12deg, transparent 0 44px, #15191038 45px, transparent 46px 77px),
+    repeating-linear-gradient(104deg, transparent 0 61px, #d0c29a0a 62px, transparent 63px 103px);
+}
+
+.map-stage.grid-on::after {
+  border-color: #c4b18a18;
+  background-image:
+    linear-gradient(#e0d3b31a 1px, transparent 1px),
+    linear-gradient(90deg, #e0d3b31a 1px, transparent 1px);
+}
+
+.token {
+  border-color: #b6a47d;
+  box-shadow: 0 3px 12px #0009, inset 0 1px #fff3;
+}
+
+.initiative-row.current {
+  border-color: #8f805c;
+  background: #353729;
+}
+
+.journal-entry,
+.modal-card,
+.settings-panel {
+  color: var(--text);
+}
+
+.toast {
+  border-color: #6b6248;
+  background: #292c22;
+  color: var(--text);
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #141710;
+}
+
+::-webkit-scrollbar-thumb {
+  border: 2px solid #141710;
+  border-radius: 20px;
+  background: #53513d;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #71694d;
+}
+
+@media (max-width: 760px) {
+  body::before {
+    opacity: 0.09;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body::before {
+    display: none;
+  }
+}
