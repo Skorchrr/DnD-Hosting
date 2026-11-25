@@ -6,6 +6,7 @@ export function freshState() {
     version:1,
     campaign:{name:'The Ashen Crown',description:'A new adventure begins.',dmName:'Dungeon Master'},
     characters:[],activeCharacterId:null,
+    contentPacks:[{id:'default-pack',name:'Campaign Homebrew',description:'Your campaign-owned content.',includeSrd:true,content:{}}],activePackId:'default-pack',
     encounter:{active:false,round:0,turnIndex:-1,combatants:[],tokens:[],measureMode:false,measureStart:null,measureEnd:null,map:{name:'The Ruined Keep',image:null,grid:true,columns:20,rows:15}},
     journal:[],rolls:[],customContent:{},settings:{rerollCredits:0,showRulesHelp:true}
   };
@@ -22,6 +23,9 @@ function normalizeState(saved={}) {
   state.journal=Array.isArray(saved.journal)?saved.journal:[];
   state.rolls=Array.isArray(saved.rolls)?saved.rolls:[];
   state.customContent=saved.customContent&&typeof saved.customContent==='object'?saved.customContent:{};
+  state.contentPacks=Array.isArray(saved.contentPacks)&&saved.contentPacks.length?saved.contentPacks:[{id:'default-pack',name:'Campaign Homebrew',description:'Your campaign-owned content.',includeSrd:saved.settings?.includeSrd!==false,content:state.customContent}];
+  state.contentPacks=state.contentPacks.map((p,i)=>({id:String(p.id||`pack-${i+1}`),name:String(p.name||`Content Pack ${i+1}`),description:String(p.description||''),includeSrd:p.includeSrd!==false,content:p.content&&typeof p.content==='object'?p.content:{}}));
+  state.activePackId=state.contentPacks.some(p=>p.id===saved.activePackId)?saved.activePackId:state.contentPacks[0].id;
   return state;
 }
 

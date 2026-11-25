@@ -81,3 +81,12 @@
 .combatant-hp-controls button:hover{border-color:var(--gold);color:var(--gold2)}
 .initiative-row.current{border-color:#9a8154;background:#29271f;box-shadow:inset 3px 0 #b59a68}
 @media(max-width:760px){.combatant-conditions select{max-width:125px}.initiative-row{grid-template-columns:38px minmax(0,1fr) 58px 24px}}
+
+/* Content pack controls */
+.content-pack-controls{display:flex;align-items:center;gap:10px;flex-wrap:wrap;min-width:0;flex:1}
+.pack-select-label{min-width:210px;max-width:280px;margin:0}
+.pack-actions{display:flex;gap:7px;flex-wrap:wrap}
+.pack-actions .secondary-button{white-space:nowrap;padding:9px 12px}
+.content-pack-controls>small{flex-basis:100%;margin-top:-5px}
+.content-pack-controls>#content-count-label{flex-basis:100%;font-size:12px;color:var(--muted,#aaa)}
+@media(max-width:760px){.content-toolbar{align-items:stretch;flex-direction:column}.pack-select-label{max-width:none;flex:1}.pack-actions{width:100%}.pack-actions .secondary-button{flex:1}}

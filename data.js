@@ -8,9 +8,9 @@ export async function loadRulesData() {
   data._base={};for(const key of Object.values(KEYS)) data._base[key]=[...(data[key]||[])];
   data.custom={};cachedData=data;return data;
 }
-export function applyCustomContent(data,customContent={}) {
+export function applyCustomContent(data,customContent={},includeSrd=true) {
   data.custom=customContent||{};
-  for(const [type,key] of Object.entries(KEYS)) data[key]=[...(data._base?.[key]||data[key]||[]),...(data.custom[type]||[]).filter(x=>x.visible!==false)];
+  for(const [type,key] of Object.entries(KEYS)) data[key]=[...(includeSrd?(data._base?.[key]||data[key]||[]):[]),...(data.custom[type]||[]).filter(x=>x.visible!==false)];
   return data;
 }
 export function allOfType(data,type) {

@@ -43,7 +43,9 @@ Finish the existing D&D 2024 campaign-table application as a practical VTT. Do n
 - [ ] Improve homebrew editors for class features, subclass features, monster actions, item properties, and spell details.
 - [ ] Add safer editing, duplicate, archive, and validation flows for campaign-owned content.
 - [ ] Improve encounter preparation, journal organization, and campaign backup recovery.
-- [ ] Ensure newly created content collections remain empty unless the DM explicitly imports content; never auto-import SRD 5.2 into a new pack.
+- [x] Add independent content packs with an explicit SRD 5.2 inclusion checkbox (off by default); empty packs contain no SRD entries.
+- [x] Add content-pack JSON import/export. Imports create a separate pack rather than merging into the active pack.
+- [ ] Add safer editing, duplicate, archive, and validation flows for campaign-owned content.
 
 ## Phase 5 — Online VTT capabilities
 

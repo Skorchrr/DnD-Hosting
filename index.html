@@ -66,7 +66,7 @@
 
       <section class="view" id="view-content">
         <div class="page-heading"><div><span class="eyebrow">DUNGEON MASTER WORKSHOP</span><h1>Rules & homebrew</h1><p>Browse the included 2024 SRD rules or add your own campaign content with structured fields and full descriptions.</p></div><button class="primary-button" data-action="create-content">＋ Create homebrew</button></div>
-        <div class="library-toolbar content-toolbar"><div><b id="content-count-label">Rules library</b><small>Official SRD entries are read-only. Homebrew is editable and reusable.</small></div><input type="search" id="content-search" placeholder="Search by name or rules text..."></div>
+        <div class="library-toolbar content-toolbar"><div class="content-pack-controls"><label class="field-label pack-select-label">Active content pack<select id="content-pack-select"></select></label><div class="pack-actions"><button class="secondary-button" data-action="create-pack">＋ New pack</button><button class="secondary-button" data-action="import-content-pack">↑ Import pack</button><button class="secondary-button" data-action="export-content-pack">↓ Export pack</button><input id="import-content-pack-file" type="file" accept=".json,.dndpack,application/json" hidden></div><b id="content-count-label">Rules library</b><small>Official SRD entries are read-only. Homebrew is editable and reusable.</small></div><input type="search" id="content-search" placeholder="Search by name or rules text..."></div>
         <div class="content-filter-row" id="content-filter-row">
           <button class="filter-chip active" data-content-filter="all">Everything</button>
           <button class="filter-chip" data-content-filter="class">Classes</button>

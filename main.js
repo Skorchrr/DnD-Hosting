@@ -11,11 +11,13 @@ let state=loadState(),data=null,currentView='table',activeSheetTab='overview',bu
 let mapDrag=null,storageWarningShown=false;
 const $=id=>document.getElementById(id);
 
+function activePack(){return state.contentPacks.find(p=>p.id===state.activePackId)||state.contentPacks[0];}
 function persist(){
- state.customContent=data?.custom||state.customContent||{};
+ const pack=activePack();if(pack){pack.content=data?.custom||pack.content||{};state.customContent=pack.content;}
+
  try{saveState(state);storageWarningShown=false;return true;}catch(error){if(!storageWarningShown){storageWarningShown=true;toast('Campaign storage is full or unavailable. Export a backup and reduce stored map-image size.','error');}console.error('Campaign save failed:',error);return false;}
 }
-function hydrateCustom(){applyCustomContent(data,state.customContent||{});}
+function hydrateCustom(){const pack=activePack();if(pack){state.activePackId=pack.id;state.customContent=pack.content||{};applyCustomContent(data,pack.content,pack.includeSrd!==false);}else applyCustomContent(data,state.customContent||{},true);}
 function setView(view){
  currentView=view;
  document.querySelectorAll('.view').forEach(x=>x.classList.toggle('active',x.id===`view-${view}`));
@@ -70,9 +72,10 @@ function renderEncounterView(){
  bindMapStage();
 }
 function renderContentView(){
- const result=renderContentLibrary(data,contentFilter,contentSearch);
+ const pack=activePack();const result=renderContentLibrary(data,contentFilter,contentSearch);
  $('content-library-root').innerHTML=result.html;
- $('content-count-label').textContent=`${result.count.toLocaleString()} entries in this view`;
+ $('content-count-label').textContent=`${result.count.toLocaleString()} entries · ${pack?.name||'No pack'} · ${pack?.includeSrd?'SRD 5.2 included':'No SRD content'}`;
+ const packSelect=$('content-pack-select');if(packSelect)packSelect.innerHTML=state.contentPacks.map(p=>`<option value="${escapeHTML(p.id)}" ${p.id===state.activePackId?'selected':''}>${escapeHTML(p.name)}${p.includeSrd?' · SRD 5.2':''}</option>`).join('');
  document.querySelectorAll('[data-content-filter]').forEach(b=>b.classList.toggle('active',b.dataset.contentFilter===contentFilter));
 }
 function renderJournal(){
@@ -332,12 +335,19 @@ function bindMapStage(){
  board.addEventListener('pointercancel',()=>{mapDrag=null;});
 }
 
+function openPackCreator(){
+ openModal('Create content pack',`<form id="create-pack-form"><p class="muted">A content pack keeps your custom rules, creatures and equipment together. You can create a completely empty pack or include the SRD 5.2 reference library.</p><label class="field-label">Pack name<input name="name" required maxlength="80" placeholder="My dark fantasy setting"></label><label class="field-label">Description<textarea name="description" rows="3" placeholder="What belongs in this pack?"></textarea></label><label class="checkbox-field"><input type="checkbox" name="includeSrd"><span>Include SRD 5.2 content</span></label><p class="modal-help">Leave this unchecked to create an empty pack containing no SRD entries.</p><button class="primary-button" type="submit">Create pack</button></form>`);
+ $('create-pack-form').addEventListener('submit',e=>{e.preventDefault();const fd=new FormData(e.currentTarget),name=String(fd.get('name')||'').trim();if(!name)return;const pack={id:`pack-${crypto.randomUUID()}`,name,description:String(fd.get('description')||'').trim(),includeSrd:fd.get('includeSrd')==='on',content:{}};const current=activePack();if(current)current.content=data.custom||current.content||{};state.contentPacks.push(pack);state.activePackId=pack.id;hydrateCustom();persist();closeModal();renderContentView();toast(`Created ${name}${pack.includeSrd?' with SRD 5.2':' as an empty pack'}.`);});
+}
+function exportActivePack(){const pack=activePack();if(!pack){toast('There is no active content pack.','error');return;}const payload={format:'dnd-unlimited-content-pack',version:1,exportedAt:new Date().toISOString(),pack:{...pack,content:pack.content||{}}};const blob=new Blob([JSON.stringify(payload,null,2)],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=`${pack.name.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'')||'content-pack'}.dndpack.json`;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);}
+function importContentPack(file){return file.text().then(text=>{const parsed=JSON.parse(text);let pack=parsed?.format==='dnd-unlimited-content-pack'?parsed.pack:parsed?.pack||parsed;if(!pack||typeof pack!=='object')throw new Error('Unrecognized content pack file.');const content=pack.content||pack.customContent;if(!content||typeof content!=='object'||Array.isArray(content))throw new Error('The file does not contain a content library.');const allowed=['class','species','background','subclass','feat','spell','item','monster'];for(const [type,items] of Object.entries(content)){if(!allowed.includes(type))throw new Error(`Unsupported content type: ${type}`);if(!Array.isArray(items))throw new Error(`${type} entries must be an array.`);for(const item of items){if(!item||typeof item!=='object'||!String(item.name||'').trim())throw new Error(`A ${type} entry is missing its name.`);item.id=String(item.id||`${type}-${crypto.randomUUID()}`);item.custom=true;}}return{id:String(pack.id||`import-${crypto.randomUUID()}`),name:String(pack.name||file.name.replace(/\.json$/i,'').replace(/\.dndpack$/i,'' )||'Imported pack').slice(0,80),description:String(pack.description||''),includeSrd:pack.includeSrd===true,content};});}
+
 function bindGlobalEvents(){
  document.addEventListener('click',e=>{
   const nav=e.target.closest('[data-nav]');if(nav){e.preventDefault();setView(nav.dataset.nav);return;}
   const openChar=e.target.closest('[data-open-character]');if(openChar){syncActiveCharacter(openChar.dataset.openCharacter);activeSheetTab='overview';setView('sheet');return;}
   const action=e.target.closest('[data-action]');if(action){const name=action.dataset.action;
-   if(name==='new-character'){openBuilder();return;}if(name==='quick-roll'){openQuickRoll();return;}if(name==='create-content'){openContentTypeChooser();return;}if(name==='clear-rolls'){state.rolls=[];persist();renderDashboard();return;}
+   if(name==='new-character'){openBuilder();return;}if(name==='quick-roll'){openQuickRoll();return;}if(name==='create-content'){openContentTypeChooser();return;}if(name==='create-pack'){openPackCreator();return;}if(name==='export-content-pack'){exportActivePack();return;}if(name==='import-content-pack'){$('import-content-pack-file')?.click();return;}if(name==='clear-rolls'){state.rolls=[];persist();renderDashboard();return;}
    if(name==='save-settings'){state.campaign.name=$('setting-campaign-name').value.trim()||'Untitled Campaign';state.campaign.description=$('setting-campaign-description').value.trim();state.campaign.dmName=$('setting-dm-name').value.trim()||'Dungeon Master';persist();renderSidebar();toast('Campaign details saved.');return;}
    if(name==='grant-reroll'){state.settings.rerollCredits++;persist();renderSettings();toast('One ability-score reroll granted.');return;}
    if(name==='export-backup'){exportState(state);return;}if(name==='save-journal'){const title=$('journal-title').value.trim(),body=$('journal-body').value.trim();if(!title||!body){toast('Add a title and some notes first.','error');return;}state.journal.push({id:crypto.randomUUID(),title,body,createdAt:new Date().toISOString()});persist();$('journal-title').value='';$('journal-body').value='';renderJournal();toast('Journal entry saved.');return;}
@@ -382,6 +392,8 @@ function bindGlobalEvents(){
  $('modalContent').addEventListener('submit',e=>{
   if(e.target.id==='dice-form'){e.preventDefault();const fd=new FormData(e.target),count=Math.max(1,Math.min(50,Number(fd.get('count'))||1)),sides=Number(fd.get('sides'))||20,modifier=Number(fd.get('modifier'))||0;const rolls=Array.from({length:count},()=>rollDie(sides)),total=rolls.reduce((a,b)=>a+b,0)+modifier;const detail=`${rolls.join(' + ')} ${formatMod(modifier)} = ${total}`;$('dice-result').innerHTML=`<div class="roll-result-panel"><b>${total}</b><span>${escapeHTML(detail)}</span></div>`;addRoll({name:'Dice roller',formula:`${count}d${sides}${modifier?formatMod(modifier):''}`,rolls,total,detail});}
  });
+ $('content-pack-select')?.addEventListener('change',e=>{const next=state.contentPacks.find(p=>p.id===e.target.value);if(!next)return;const current=activePack();if(current)current.content=data.custom||current.content||{};state.activePackId=next.id;hydrateCustom();persist();renderContentView();toast(`Switched to ${next.name}.`);});
+ $('import-content-pack-file')?.addEventListener('change',async e=>{const file=e.target.files?.[0];if(!file)return;try{const pack=await importContentPack(file);const existing=state.contentPacks.findIndex(p=>p.id===pack.id);if(existing>=0){pack.id=`${pack.id}-${crypto.randomUUID().slice(0,8)}`;pack.name+= ' (Imported)';}state.contentPacks.push(pack);state.activePackId=pack.id;hydrateCustom();persist();renderContentView();toast(`Imported ${pack.name}.`);}catch(err){toast(`Content import failed: ${err.message}`,'error');}e.target.value='';});
  $('import-backup-file').addEventListener('change',async e=>{const file=e.target.files?.[0];if(!file)return;try{state=await importState(file);state.activeCharacterId=state.activeCharacterId||state.characters[0]?.id||null;hydrateCustom();persist();renderView();toast('Campaign backup imported.');}catch(err){toast(`Import failed: ${err.message}`,'error');}e.target.value='';});
  $('map-stage')?.addEventListener('change',()=>{});
  document.addEventListener('change',e=>{

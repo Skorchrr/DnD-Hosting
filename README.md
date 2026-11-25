@@ -41,3 +41,9 @@ Condition markers are tracked on combatants but do not automatically impose cond
 The included catalog is SRD 5.2 (2024), not the complete paid Player's Handbook or a full commercial rules catalog. Homebrew records are stored separately from the bundled SRD definitions. Creating a separate content pack is not part of this build; the app does not create or silently prefill new packs. The SRD is loaded into the shared read-only rules reference and is never copied into a newly created homebrew entry or collection.
 
 See [THIRD_PARTY_NOTICES.md](./THIRD_PARTY_NOTICES.md) for attribution and licensing details.
+
+## Content packs
+
+Open **Rules & homebrew** to manage content packs. Choose **New pack** to create a separate library and decide whether to include the SRD 5.2 reference entries. The checkbox is off by default, so a new pack can start completely empty. Packs keep their own custom classes, species, backgrounds, subclasses, feats, spells, items, and monsters.
+
+Use **Export pack** to download the active pack as a `.dndpack.json` file. Use **Import pack** to add a pack from another D&D Unlimited export. Importing creates a separate pack rather than merging content into the active one. Campaign backups remain separate and include campaign state plus all content packs.
