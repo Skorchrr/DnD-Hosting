@@ -1,15 +1,16 @@
-# GitHub Pages — Shadowkeep D&D 2024 rebuild
+# D&D Unlimited — static deployment
 
-1. Keep `index.html`, `styles.css`, and `theme.css` at the publishing root.
-2. Keep `src/` and `data/` as folders with their original names. Do not flatten module files into the root.
-3. In **Settings → Pages**, select **Deploy from a branch**, branch `main`, folder `/ (root)`.
-4. After publishing, open the site and hard-refresh. Browser storage is local to each device/browser; export a backup before clearing site data.
+This version is a browser-local VTT. Publish the contents of this folder from the repository root (or the `/docs` folder only if the entire project is placed there). Keep the relative paths and folder structure intact.
 
-Verify that these paths load rather than returning 404:
+## Required files
 
-- `/DnD-Hosting/index.html`
-- `/DnD-Hosting/styles.css`
-- `/DnD-Hosting/theme.css`
-- `/DnD-Hosting/src/main.js`
-- `/DnD-Hosting/data/srd-5.2-2024.json`
+- `index.html`
+- `styles.css` and `theme.css`
+- `src/` (all application modules)
+- `data/srd-5.2-2024.json`
 
+For GitHub Pages, select **Deploy from a branch**, choose the publishing branch and `/(root)`. Do not upload only `index.html`, flatten the `src/` directory, or rename the `data/` directory.
+
+After publishing, open the deployed URL and hard-refresh. Confirm that the page title reads **D&D Unlimited**, that the dashboard loads, and that the Rules & Homebrew filters display as buttons. If the app cannot load its rules data, check that the deployed `data/srd-5.2-2024.json` path returns successfully.
+
+Campaign data is stored in the current browser. Use **Campaign settings → Export campaign** before clearing browser data or moving to another device. This build does not provide hosted accounts, real-time multiplayer, or server-enforced player/DM permissions.

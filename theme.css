@@ -1,5 +1,5 @@
 /*
- * Shadowkeep — Bog & Iron theme
+ * D&D Unlimited — Bog & Iron theme
  * Layout rules stay in styles.css; this file owns the visual system.
  * Palette: peat, wet stone, old bone, weathered brass and dried blood.
  */
@@ -341,9 +341,12 @@ textarea::placeholder {
 
 .map-stage {
   background-image:
-    radial-gradient(ellipse at 52% 35%, #77764b25, transparent 50%),
+    var(--map-image, radial-gradient(ellipse at 52% 35%, #77764b25, transparent 50%)),
     repeating-linear-gradient(152deg, transparent 0 52px, #b0a17a08 53px, transparent 55px 89px),
     linear-gradient(145deg, #454837 0%, #292e24 48%, #383b2c 100%);
+  background-size: cover, auto, cover;
+  background-position: center;
+  background-repeat: no-repeat, repeat, no-repeat;
 }
 
 .map-stage::before {
@@ -417,3 +420,64 @@ textarea::placeholder {
     display: none;
   }
 }
+
+/* Final usability pass: clearer focus, restrained hover feedback, and readable states. */
+button,
+summary,
+a,
+.upload-button {
+  cursor: pointer;
+}
+
+button:disabled,
+input:disabled,
+select:disabled {
+  cursor: not-allowed;
+  opacity: 0.48;
+}
+
+:where(button, a, summary, input, select, textarea):focus-visible {
+  outline: 2px solid #c9ad76;
+  outline-offset: 3px;
+}
+
+button:not(:disabled) {
+  transition: border-color 140ms ease, background-color 140ms ease, color 140ms ease, transform 140ms ease;
+}
+
+.primary-button:not(:disabled):hover,
+.secondary-button:not(:disabled):hover,
+.topbar-roll:not(:disabled):hover {
+  filter: brightness(1.12);
+}
+
+.dashboard-panel,
+.sheet-panel,
+.settings-panel,
+.journal-editor {
+  box-shadow: 0 10px 28px #0002, inset 0 1px #e8dfc008;
+}
+
+.page-heading p,
+.panel-heading p {
+  color: #bdb5a3;
+  line-height: 1.65;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  button:not(:disabled) {
+    transition: none;
+  }
+}
+
+.map-measure-line{position:absolute;z-index:3;height:2px;background:#e8c98c;transform-origin:0 50%;box-shadow:0 0 0 1px #17130c88,0 0 12px #e4c17a88;pointer-events:none}
+.map-measure-line::before,.map-measure-line::after{content:"";position:absolute;top:50%;width:8px;height:8px;border:2px solid #f0d7a7;border-radius:50%;background:#292219;transform:translateY(-50%)}
+.map-measure-line::before{left:-4px}.map-measure-line::after{right:-4px}
+.map-measure-label{position:absolute;z-index:4;transform:translate(-50%,-50%);padding:5px 8px;border:1px solid #927447;border-radius:6px;background:#17140fe8;color:#f0d8aa;font-size:11px;font-weight:800;pointer-events:none;white-space:nowrap}
+.map-measure-start{position:absolute;z-index:4;width:12px;height:12px;border:2px solid #f0d7a7;border-radius:50%;background:#3a2b19;transform:translate(-50%,-50%);pointer-events:none}
+.map-stage-label{z-index:5}
+
+.death-save-panel{display:grid;gap:8px;margin-top:8px;padding:10px;border:1px solid #70483f;border-radius:9px;background:#2b1f1b}
+.death-save-panel>div:first-child{display:grid;gap:3px}.death-save-panel>div:first-child b{font:600 12px Cinzel,serif;color:#e5c7a7}.death-save-panel small{font-size:10px;color:#c7a79b}
+.death-save-track{display:flex;gap:14px;flex-wrap:wrap}.death-save-track span{font-size:10px;color:var(--muted)}.death-save-track b{color:var(--gold2);margin-left:4px}
+.death-save-actions{display:flex;align-items:center;gap:10px}.death-save-actions button{font-size:10px}

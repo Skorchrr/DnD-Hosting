@@ -4,7 +4,7 @@ export function escapeHTML(value='') {
 export function humanize(value='') {
  return String(value??'').replace(/[-_]/g,' ').replace(/\b\w/g,c=>c.toUpperCase());
 }
-export function initials(value='') { return String(value).trim().split(/\s+/).slice(0,2).map(x=>x[0]||'').join('').toUpperCase()||'SK'; }
+export function initials(value='') { return String(value).trim().split(/\s+/).slice(0,2).map(x=>x[0]||'').join('').toUpperCase()||'DU'; }
 export function rulesText(value='') {
  const text=String(value??'').trim();
  if(!text) return '<p class="muted">No description available.</p>';
@@ -17,7 +17,7 @@ export function toast(message,tone='') {
 }
 export function openModal(title,body,actions='') {
  const dialog=document.getElementById('modal');
- document.getElementById('modalContent').innerHTML=`<div class="modal-heading"><div><span class="eyebrow">SHADOWKEEP</span><h2>${escapeHTML(title)}</h2></div><button type="button" class="icon-close" data-action="close-modal" aria-label="Close">×</button></div><div class="modal-body">${body}</div>${actions?`<footer class="modal-footer">${actions}</footer>`:''}`;
+ document.getElementById('modalContent').innerHTML=`<div class="modal-heading"><div><span class="eyebrow">D&amp;D UNLIMITED</span><h2>${escapeHTML(title)}</h2></div><button type="button" class="icon-close" data-action="close-modal" aria-label="Close">×</button></div><div class="modal-body">${body}</div>${actions?`<footer class="modal-footer">${actions}</footer>`:''}`;
  dialog.showModal();
 }
 export function closeModal(){const dialog=document.getElementById('modal');if(dialog.open)dialog.close();}

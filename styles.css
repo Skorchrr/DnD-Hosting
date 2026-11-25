@@ -62,10 +62,22 @@
 .side-tag.enemy{border-color:#78504a;color:#e3a69a}
 .side-tag.npc{border-color:#51617c;color:#b2c1df}
 .initiative-list{display:grid;gap:7px}
-.initiative-row{grid-template-columns:42px minmax(0,1fr) 46px 27px}
+.initiative-row{grid-template-columns:42px minmax(0,1fr) 66px 27px}
 .initiative-person small{font-size:10px;line-height:1.6}
 .content-card details p,.rule-entry p,.feature-entry p{font-size:13px;line-height:1.75}
 .sheet-panel p{line-height:1.7}
 .sheet-panel .section-heading p{font-size:13px;color:var(--muted);max-width:75ch}
 @media(max-width:900px){.spell-choice{grid-template-columns:18px minmax(0,1fr)}.spell-choice details{grid-column:2}.builder-dialog{width:calc(100vw - 20px);height:calc(100vh - 20px)}}
 @media(max-width:760px){.choice-card{min-height:150px}.spell-choice{grid-template-columns:18px minmax(0,1fr)}.spell-choice details{grid-column:2}.selection-detail{padding:15px}.builder-dialog{width:calc(100vw - 12px);height:calc(100vh - 12px)}}
+
+/* VTT combat controls */
+.combatant-conditions{display:flex;align-items:center;flex-wrap:wrap;gap:5px;margin-top:7px}
+.combatant-conditions select{width:auto;max-width:145px;padding:4px 7px;font-size:10px;min-height:25px}
+.condition-chip,.condition-add{border:1px solid #67523a;background:#2a261d;color:#d7c49d;border-radius:20px;padding:3px 7px;font-size:9px;cursor:pointer}
+.condition-chip:hover,.condition-add:hover{border-color:var(--gold2);color:#fff0d4}
+.condition-add{font-size:12px;padding:1px 8px}
+.combatant-hp-controls{display:flex;justify-content:center;gap:3px;margin-top:5px}
+.combatant-hp-controls button{border:1px solid var(--line);background:#26251f;color:var(--text);border-radius:5px;padding:2px 5px;font-size:9px;cursor:pointer}
+.combatant-hp-controls button:hover{border-color:var(--gold);color:var(--gold2)}
+.initiative-row.current{border-color:#9a8154;background:#29271f;box-shadow:inset 3px 0 #b59a68}
+@media(max-width:760px){.combatant-conditions select{max-width:125px}.initiative-row{grid-template-columns:38px minmax(0,1fr) 58px 24px}}

@@ -76,8 +76,9 @@ export function calculateCharacterStats(character,data) {
   const cls=getClass(data,character.classId);
   const con=abilityMod(character.abilities?.con);
   const hitDie=Number(cls?.hd||8);
-  const maxHp=level===1?Math.max(1,hitDie+con):Math.max(1,(hitDie+con)+Array.from({length:level-1},()=>Math.max(1,Math.floor(hitDie/2)+1+con)).reduce((a,b)=>a+b,0));
-  const row=cls?.table?.[level-1]||{};
+  const baseMaxHp=level===1?Math.max(1,hitDie+con):Math.max(1,(hitDie+con)+Array.from({length:level-1},()=>Math.max(1,Math.floor(hitDie/2)+1+con)).reduce((a,b)=>a+b,0));
+  const maxHp=Math.max(1,baseMaxHp+(Number(character.hpRollAdjustment)||0));
+  const row=cls?.table?.[Math.min(level-1,Math.max(0,(cls?.table?.length||1)-1))]||{};
   const pb=Number(row.pb)||proficiencyBonus(level);
   const spellAbility=cls?.spell?.ab||character.spellAbility||null;
   const spellMod=spellAbility?abilityMod(character.abilities?.[spellAbility]):0;

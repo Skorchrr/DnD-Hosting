@@ -4,8 +4,8 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#11130f">
-  <meta name="description" content="Shadowkeep — a private D&D 2024 campaign table and character manager.">
-  <title>Shadowkeep — The Ashen Crown</title>
+  <meta name="description" content="D&D Unlimited — a dark fantasy virtual tabletop for campaigns, characters, maps, combat, and custom content.">
+  <title>D&D Unlimited — The Ashen Crown</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -16,8 +16,8 @@
 <body>
   <div class="app-shell">
     <aside class="sidebar">
-      <a class="brand" href="#table" data-nav="table" aria-label="Shadowkeep home"><span class="brand-mark">✦</span><span><b>SHADOWKEEP</b><small>CAMPAIGN TABLE</small></span></a>
-      <div class="campaign-card"><span class="eyebrow">CURRENT CAMPAIGN</span><b id="sidebar-campaign-name">The Ashen Crown</b><small><i class="status-dot"></i> LOCAL PRIVATE SESSION</small></div>
+      <a class="brand" href="#table" data-nav="table" aria-label="D&D Unlimited home"><span class="brand-mark">✦</span><span><b>D&amp;D UNLIMITED</b><small>VIRTUAL TABLETOP</small></span></a>
+      <div class="campaign-card"><span class="eyebrow">CURRENT CAMPAIGN</span><b id="sidebar-campaign-name">The Ashen Crown</b><small><i class="status-dot"></i> LOCAL CAMPAIGN · THIS BROWSER</small></div>
       <nav class="main-nav" aria-label="Main navigation">
         <button class="nav-item active" data-nav="table"><span>▦</span> Campaign table</button>
         <button class="nav-item" data-nav="characters"><span>♙</span> Characters</button>
@@ -31,7 +31,7 @@
         <div id="sidebar-party-list" class="sidebar-party-list"></div>
         <button class="sidebar-create" data-action="new-character">＋ Create character</button>
         <button class="nav-item settings-link" data-nav="settings"><span>⚙</span> Campaign settings</button>
-        <div class="sidebar-foot"><span class="avatar-small">DM</span><span><b id="sidebar-dm-name">Dungeon Master</b><small>Campaign host</small></span><span class="foot-menu">···</span></div>
+        <div class="sidebar-foot"><span class="avatar-small">DM</span><span><b id="sidebar-dm-name">Dungeon Master</b><small>Dungeon Master</small></span><span class="foot-menu">···</span></div>
       </div>
     </aside>
 
@@ -43,7 +43,7 @@
 
       <section class="view active" id="view-table">
         <div class="page-heading"><div><span class="eyebrow">THE CHRONICLE · CAMPAIGN OVERVIEW</span><h1>Welcome to the table</h1><p>One campaign space for your characters, rules, maps, and sessions.</p></div><div class="heading-actions"><button class="secondary-button" data-nav="characters">View party</button><button class="primary-button" data-action="new-character">＋ Create character</button></div></div>
-        <section class="welcome-banner"><div><span class="eyebrow">CURRENT CAMPAIGN</span><h2 id="campaign-heading">The Ashen Crown</h2><p id="campaign-description">A new adventure begins.</p><div class="banner-facts"><span><b id="campaign-characters-count">0</b> characters</span><span><b id="campaign-encounter-count">0</b> combatants</span><span><b>2024</b> rules reference</span></div></div><div class="banner-sigil"><span>✦</span><b>SK</b><small>SHADOWKEEP</small></div></section>
+        <section class="welcome-banner"><div><span class="eyebrow">CURRENT CAMPAIGN</span><h2 id="campaign-heading">The Ashen Crown</h2><p id="campaign-description">A new adventure begins.</p><div class="banner-facts"><span><b id="campaign-characters-count">0</b> characters</span><span><b id="campaign-encounter-count">0</b> combatants</span><span><b>2024</b> rules reference</span></div></div><div class="banner-sigil"><span>✦</span><b>DU</b><small>D&amp;D UNLIMITED</small></div></section>
         <div class="quick-start-grid"><button class="quick-start-card" data-nav="characters"><span>♙</span><b>Build a character</b><small>Guided creation with explanations at every step</small><i>Open characters →</i></button><button class="quick-start-card" data-nav="content"><span>▤</span><b>Browse the rules</b><small>Search SRD spells, equipment, monsters, and options</small><i>Open library →</i></button><button class="quick-start-card" data-nav="encounter"><span>⚔</span><b>Prepare an encounter</b><small>Place tokens, set initiative, and run combat</small><i>Open maps →</i></button></div>
         <div class="dashboard-columns"><section class="dashboard-panel"><div class="panel-heading"><div><span class="eyebrow">THE COMPANY</span><h2>Your characters</h2></div><button class="text-button" data-nav="characters">See all →</button></div><div id="dashboard-party" class="dashboard-party"></div></section><section class="dashboard-panel"><div class="panel-heading"><div><span class="eyebrow">SESSION RECORD</span><h2>Recent rolls</h2></div><button class="text-button" data-action="clear-rolls">Clear</button></div><div id="dashboard-rolls" class="recent-roll-list"></div></section></div>
       </section>
@@ -60,14 +60,24 @@
       </section>
 
       <section class="view" id="view-encounter">
-        <div class="page-heading"><div><span class="eyebrow">THE BATTLEFIELD</span><h1>Maps & combat</h1><p>Place your miniatures, build the encounter from the map, and run initiative in one place.</p></div><div class="heading-actions"><span class="rules-pill">SHARED ENCOUNTER STATE</span></div></div>
+        <div class="page-heading"><div><span class="eyebrow">THE BATTLEFIELD</span><h1>Maps & combat</h1><p>Place your miniatures, build the encounter from the map, and run initiative in one place.</p></div><div class="heading-actions"><span class="rules-pill">ACTIVE ENCOUNTER</span></div></div>
         <div id="encounter-root"></div>
       </section>
 
       <section class="view" id="view-content">
         <div class="page-heading"><div><span class="eyebrow">DUNGEON MASTER WORKSHOP</span><h1>Rules & homebrew</h1><p>Browse the included 2024 SRD rules or add your own campaign content with structured fields and full descriptions.</p></div><button class="primary-button" data-action="create-content">＋ Create homebrew</button></div>
         <div class="library-toolbar content-toolbar"><div><b id="content-count-label">Rules library</b><small>Official SRD entries are read-only. Homebrew is editable and reusable.</small></div><input type="search" id="content-search" placeholder="Search by name or rules text..."></div>
-        <div class="content-filter-row" id="content-filter-row">${[['all','Everything'],['class','Classes'],['species','Species'],['background','Backgrounds'],['subclass','Subclasses'],['feat','Feats'],['spell','Spells'],['item','Equipment'],['monster','Monsters']].map(([id,label],i)=>`<button class="filter-chip ${i===0?'active':''}" data-content-filter="${id}">${label}</button>`).join('')}</div>
+        <div class="content-filter-row" id="content-filter-row">
+          <button class="filter-chip active" data-content-filter="all">Everything</button>
+          <button class="filter-chip" data-content-filter="class">Classes</button>
+          <button class="filter-chip" data-content-filter="species">Species</button>
+          <button class="filter-chip" data-content-filter="background">Backgrounds</button>
+          <button class="filter-chip" data-content-filter="subclass">Subclasses</button>
+          <button class="filter-chip" data-content-filter="feat">Feats</button>
+          <button class="filter-chip" data-content-filter="spell">Spells</button>
+          <button class="filter-chip" data-content-filter="item">Equipment</button>
+          <button class="filter-chip" data-content-filter="monster">Monsters</button>
+        </div>
         <div id="content-library-root"></div>
       </section>
 
@@ -78,11 +88,11 @@
       </section>
 
       <section class="view" id="view-settings">
-        <div class="page-heading"><div><span class="eyebrow">CAMPAIGN CONFIGURATION</span><h1>Campaign settings</h1><p>Manage your campaign details, character creation permissions, backups, and local test settings.</p></div></div>
-        <div class="settings-grid"><section class="settings-panel"><span class="eyebrow">CAMPAIGN IDENTITY</span><h2>Campaign details</h2><label class="field-label">Campaign name<input id="setting-campaign-name"></label><label class="field-label">Description<textarea id="setting-campaign-description" rows="4"></textarea></label><label class="field-label">Dungeon Master display name<input id="setting-dm-name"></label><button class="primary-button" data-action="save-settings">Save campaign details</button></section><section class="settings-panel"><span class="eyebrow">ABILITY SCORE ROLLS</span><h2>DM-granted rerolls</h2><p>Characters can roll one ability-score set during creation. Grant additional sets here when the DM allows a reroll.</p><div class="reroll-summary"><b id="reroll-credit-count">0</b><span>available rerolls</span></div><button class="secondary-button" data-action="grant-reroll">＋ Grant one reroll</button></section><section class="settings-panel"><span class="eyebrow">CAMPAIGN DATA</span><h2>Backups and portability</h2><p>Export a complete backup regularly. It includes characters, custom content, map state, encounter state, and journal entries.</p><div class="settings-button-row"><button class="primary-button" data-action="export-backup">↓ Export campaign</button><label class="secondary-button upload-button">↑ Import campaign<input id="import-backup-file" type="file" accept="application/json" hidden></label></div><p class="fine-print">This build stores campaign data in this browser. It does not claim live multiplayer synchronization. A secure shared campaign service needs authenticated memberships and server-enforced permissions.</p></section></div>
+        <div class="page-heading"><div><span class="eyebrow">CAMPAIGN CONFIGURATION</span><h1>Campaign settings</h1><p>Manage campaign details, ability-score rerolls, and campaign backups.</p></div></div>
+        <div class="settings-grid"><section class="settings-panel"><span class="eyebrow">CAMPAIGN IDENTITY</span><h2>Campaign details</h2><label class="field-label">Campaign name<input id="setting-campaign-name"></label><label class="field-label">Description<textarea id="setting-campaign-description" rows="4"></textarea></label><label class="field-label">Dungeon Master display name<input id="setting-dm-name"></label><button class="primary-button" data-action="save-settings">Save campaign details</button></section><section class="settings-panel"><span class="eyebrow">ABILITY SCORE ROLLS</span><h2>DM-granted rerolls</h2><p>Characters can roll one ability-score set during creation. Grant additional sets here when the DM allows a reroll.</p><div class="reroll-summary"><b id="reroll-credit-count">0</b><span>available rerolls</span></div><button class="secondary-button" data-action="grant-reroll">＋ Grant one reroll</button></section><section class="settings-panel"><span class="eyebrow">CAMPAIGN DATA</span><h2>Backups and portability</h2><p>Export a complete backup regularly. It includes characters, custom content, map state, encounter state, and journal entries.</p><div class="settings-button-row"><button class="primary-button" data-action="export-backup">↓ Export campaign</button><label class="secondary-button upload-button">↑ Import campaign<input id="import-backup-file" type="file" accept="application/json" hidden></label></div><p class="fine-print">This build stores campaign data in this browser. It does not claim live multiplayer synchronization. Online play requires a hosted campaign service with authenticated memberships and server-enforced permissions.</p></section></div>
       </section>
 
-      <footer class="app-footer"><span>SHADOWKEEP · PRIVATE CAMPAIGN TABLE</span><span>Rules data: SRD 5.2 · CC BY 4.0</span></footer>
+      <footer class="app-footer"><span>D&amp;D UNLIMITED · VIRTUAL TABLETOP</span><span>Rules data: SRD 5.2 · CC BY 4.0</span></footer>
     </main>
   </div>
 

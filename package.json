@@ -1,9 +1,9 @@
 {
-  "name": "shadowkeep-dnd-2024",
-  "version": "1.1.0-bog-and-iron",
+  "name": "dnd-unlimited-vtt",
+  "version": "1.0.0",
   "private": true,
   "type": "module",
-  "description": "Shadowkeep D&D 2024 private campaign table — guided character creation, readable sheet, homebrew, and linked encounters",
+  "description": "D&D Unlimited \u2014 dark fantasy D&D 2024 virtual tabletop",
   "engines": {
     "node": ">=18"
   },
